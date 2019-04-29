@@ -1,0 +1,56 @@
+[
+	{
+		"id": 1,
+		"name": "National Cinema",
+		"location": "Abu Dhabi",
+		"link": "https://starcinemas.ae/AllMovies_Venue.aspx?VenueID=NDE5-jJKLWa2s%2fQA%3d"
+	},
+	{
+		"id": 2,
+		"name": "Grand Safeer Mussafah",
+		"location": "Abu Dhabi",
+		"link": "https://starcinemas.ae/AllMovies_Venue.aspx?VenueID=NDI2-%2fIuxWv91XIc%3d"	
+	},
+	{
+		"id": 3,
+		"name": "Star Cinemas, Khalifa City",
+		"location": "Abu Dhabi",
+		"link": "https://starcinemas.ae/AllMovies_Venue.aspx?VenueID=MTYwNA%3d%3d-jpG9mF2XA8E%3d"
+	},
+	{
+		"id": 4,
+		"name": "Grand Cinemas, Al Ain Mall",
+		"location": "Al Ain",
+		"link": "https://starcinemas.ae/AllMovies_Venue.aspx?VenueID=Mzkz-6Vokg%2bkJcWc%3d"
+	},
+	{
+		"id": 5,
+		"name": "Star Cinemas, Bawadi Mall",
+		"location": "Al Ain",
+		"link": "https://starcinemas.ae/AllMovies_Venue.aspx?VenueID=Mzk2-vFBkjsW3dp8%3d"
+	},
+	{
+		"id": 6,
+		"name": "Star Cinemas, Century Mall",
+		"location": "Fujairah",
+		"link": "https://starcinemas.ae/AllMovies_Venue.aspx?VenueID=NDA0-WMdeqepwEaU%3d"
+	},
+	{
+		"id": 7,
+		"name": "Star Cinemas, Dana Plaza",
+		"location": "Fujairah",
+		"link": "https://starcinemas.ae/AllMovies_Venue.aspx?VenueID=NDA1-0ONGQyGYWxQ%3d"
+	},
+	{
+		"id": 8,
+		"name": "Gulf Cinema",
+		"location": "Ras Al Khaimah",
+		"link": "https://starcinemas.ae/AllMovies_Venue.aspx?VenueID=NDIy-RJvsh5%2bntwA%3d"
+	},
+	{
+		"id": 9,
+		"name": "Star Cineplex",
+		"location": "Sharjah",
+		"link": "https://starcinemas.ae/AllMovies_Venue.aspx?VenueID=NDAw-%2bWTWvv6oeGk%3d"
+	}
+]
