@@ -1,14 +1,9 @@
-const util = require("util");
-const fs = require("fs");
-
 const JsSearch = require("js-search");
 
 const scraper = require("./scraper");
 const cinemas = require("./cinemas.json");
 
 class Scraper {
-  constructor() {}
-
   queryData(location, isCinemaSearch = false) {
     return new Promise((resolve, reject) => {
       if (isCinemaSearch) {
@@ -40,12 +35,12 @@ class Scraper {
   async getCinemaInfo(location) {
     try {
       const results = await this.queryData(location, true);
-      const cinema = await scraper.scrape(
-        results.map(result => result.link).join()
-      );
-      return new Promise((resolve, reject) => {
-        resolve(cinema);
-      });
+      for (let result of results) {
+        const cinema = await scraper.scrape(result.link);
+        return new Promise((resolve, reject) => {
+          resolve(cinema);
+        });
+      }
     } catch (e) {
       console.log(e);
     }
