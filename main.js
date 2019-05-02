@@ -1,22 +1,19 @@
-const JsSearch = require("js-search");
+const JsSearch = require('js-search');
 
-const scraper = require("./scraper");
-const cinemas = require("./cinemas.json");
+const scraper = require('./scraper');
+const cinemas = require('./cinemas.json');
 
 class Scraper {
   queryData(location, isCinemaSearch = false) {
-    return new Promise((resolve, reject) => {
-      if (isCinemaSearch) {
-        const search = new JsSearch.Search("id");
-        search.addIndex("name");
-        search.addIndex("location");
+    if (isCinemaSearch) {
+      const search = new JsSearch.Search('id');
+      search.addIndex('name');
+      search.addIndex('location');
 
-        search.addDocuments(cinemas);
+      search.addDocuments(cinemas);
 
-        const results = search.search(location);
-        resolve(results);
-      }
-    });
+      return search.search(location);
+    }
   }
   async scrapeAll() {
     try {
@@ -25,9 +22,7 @@ class Scraper {
         const result = await scraper.scrape(cinema.link);
         results.push(result);
       }
-      return new Promise((resolve, reject) => {
-        resolve(results);
-      });
+      return results;
     } catch (e) {
       console.log(e);
     }
@@ -37,9 +32,7 @@ class Scraper {
       const results = await this.queryData(location, true);
       for (let result of results) {
         const cinema = await scraper.scrape(result.link);
-        return new Promise((resolve, reject) => {
-          resolve(cinema);
-        });
+        return cinema;
       }
     } catch (e) {
       console.log(e);
@@ -48,16 +41,13 @@ class Scraper {
   async getMovieInfo(cinema, movie) {
     try {
       const shows = await this.getCinemaInfo(cinema);
-      const search = new JsSearch.Search(")id");
-      search.addIndex("title");
-      search.addIndex("link");
+      const search = new JsSearch.Search(')id');
+      search.addIndex('title');
+      search.addIndex('link');
 
       search.addDocuments(shows);
 
-      const results = search.search(movie);
-      return new Promise((resolve, reject) => {
-        resolve(results);
-      });
+      return search.search(movie);
     } catch (e) {
       console.log(e);
     }
