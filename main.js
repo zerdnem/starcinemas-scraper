@@ -4,7 +4,7 @@ const scraper = require('./scraper');
 const cinemas = require('./cinemas.json');
 
 class Scraper {
-  queryData(location, isCinemaSearch = false) {
+  async queryData(location, isCinemaSearch = false) {
     if (isCinemaSearch) {
       const search = new JsSearch.Search('id');
       search.addIndex('name');
@@ -12,7 +12,9 @@ class Scraper {
 
       search.addDocuments(cinemas);
 
-      return search.search(location);
+      const result = search.search(location);
+      if (result.length == 0) throw new Error('Not found');
+      return result;
     }
   }
   async scrapeAll() {
@@ -32,6 +34,7 @@ class Scraper {
       const results = await this.queryData(location, true);
       for (let result of results) {
         const cinema = await scraper.scrape(result.link);
+        if (!cinema) return;
         return cinema;
       }
     } catch (e) {
@@ -41,6 +44,7 @@ class Scraper {
   async getMovieInfo(cinema, movie) {
     try {
       const shows = await this.getCinemaInfo(cinema);
+      if (!shows) return;
       const search = new JsSearch.Search(')id');
       search.addIndex('title');
       search.addIndex('link');
