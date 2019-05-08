@@ -28,7 +28,7 @@ const scraper = {
           });
 
           if (starcinema_link.length == 0)
-            throw new Error("Can't get data from source");
+            reject("Can't get data from source.");
           const results = [];
           $('div#divAllMovie')
             .children()
@@ -131,7 +131,7 @@ const scraper = {
             }
           });
         } else {
-          reject("Can't access source");
+          reject("Can't access source.");
         }
       });
     });

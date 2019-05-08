@@ -13,7 +13,7 @@ class Scraper {
       search.addDocuments(cinemas);
 
       const result = search.search(location);
-      if (result.length == 0) throw new Error('Not found');
+      if (result.length == 0) throw new Error('Not found.');
       return result;
     }
   }
@@ -44,14 +44,15 @@ class Scraper {
   async getMovieInfo(cinema, movie) {
     try {
       const shows = await this.getCinemaInfo(cinema);
-      if (!shows) return;
       const search = new JsSearch.Search(')id');
       search.addIndex('title');
       search.addIndex('link');
 
       search.addDocuments(shows);
 
-      return search.search(movie);
+      const movies = search.search(movie);
+      if (!movies) throw new Error('Not found.');
+      return movies;
     } catch (e) {
       console.log(e);
     }
