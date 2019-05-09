@@ -15,6 +15,7 @@ const scraper = {
         },
       };
       request(options, (err, res, body) => {
+          const data = new Array
         if (!err && res.statusCode) {
           const $ = cheerio.load(body);
 
@@ -61,75 +62,16 @@ const scraper = {
             images.push($(e).attr('src'));
           });
 
-          const data = [];
           $('a.cinema_tittle').each((i, e) => {
             const title = $(e).text();
             const link = 'https://www.starcinemas.ae/' + $(e).attr('href');
 
             const image = images.slice(1)[i];
             const schedule = schedules[i];
-            data.push({title, link, image, schedule});
+
+			data.push({title, link, image, schedule:get(schedule)})
           });
-          const not_final = [];
-          data.map((movie, index) => {
-            const id = movie.schedule[0].split(' - ')[0]; //.replace(/\s/g, '');
-            const price = movie.schedule[0].split(' - ')[1].replace(/\s/g, '');
-            const time = movie.schedule[1].match(
-              /([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9] [APap][mM]/g,
-            );
-            const match = movie.schedule[1].match(
-              /STAR SELECT - [0-9][0-9].[0-9][0-9]/g,
-            );
-            const regex = /'([^']*)'/;
-            const link_to_page =
-              'https://starcinemas.ae/' +
-              starcinema_link[index].match(regex)[1];
-
-            if (match) {
-              const second_id = movie.schedule[1]
-                .match(/STAR SELECT - [0-9][0-9].[0-9][0-9]/g)[0]
-                .split(' - ')[0];
-
-              if (!second_id) {
-                second_id = movie.schedule[1]
-                  .match(/STAR LUX - [0-9][0-9].[0-9][0-9]/g)[0]
-                  .split(' - ')[0];
-              }
-
-              const second_price = movie.schedule[1]
-                .match(/STAR SELECT - [0-9][0-9].[0-9][0-9]/g)[0]
-                .split(' - ')[1];
-
-              const second_time = movie.schedule[2].match(
-                /([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9] [APap][mM]/g,
-              );
-
-              not_final.push({
-                id: uuid(),
-                title: movie.title,
-                link: movie.link,
-                image: movie.image,
-                schedule: [
-                  {id, price, time},
-                  {
-                    id: second_id,
-                    price: second_price,
-                    time: second_time,
-                  },
-                ],
-              });
-              resolve(not_final);
-            } else {
-              not_final.push({
-                id: uuid(),
-                title: movie.title,
-                link: movie.link,
-                image: movie.image,
-                schedule: [{id, price, time}],
-              });
-              resolve(not_final);
-            }
-          });
+          resolve(data)
         } else {
           reject("Can't access source.");
         }
@@ -138,4 +80,33 @@ const scraper = {
   },
 };
 
+function get(data) {
+  const id = new Array();
+  const price = new Array();
+  const time = new Array();
+  const result = new Array()
+  let initialTime;
+  for (var i = 0; i < data.length; i++) {
+    let [initialId, initialPrice] = data[i].split(' - ');
+    initialId = initialId.match(
+      /(STAR\s[a-zA-Z]*\s[a-zA-Z]*)|(STAR\s[a-zA-Z]*)/g,
+    );
+    if (i >= 1) {
+      initialTime = data[i].match(
+        /([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9] [APap][mM]/g,
+      );
+      initialTime = initialTime.join(', ');
+      time.push(initialTime);
+    }
+    if (initialId) {
+      initialId = initialId.join(', ');
+      id.push(initialId);
+      price.push(initialPrice);
+    }
+  }
+  for (var i = 0; i < id.length; i++) {
+    result.push({id: id[i], price: price[i], time: time[i]});
+  }
+  return result
+}
 module.exports = scraper;
