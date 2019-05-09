@@ -6,7 +6,7 @@
   "author": "zerdnem <zerdnem@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest --silent"
   },
   "devDependencies": {
     "jest": "^24.8.0"
