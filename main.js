@@ -13,7 +13,7 @@ class Scraper {
       search.addDocuments(cinemas);
 
       const result = search.search(location);
-      if (result.length == 0) throw new Error('Not found.');
+      if (result.length === 0) throw new Error('Not found.');
       return result;
     }
   }
@@ -51,7 +51,7 @@ class Scraper {
       search.addDocuments(shows);
 
       const movies = search.search(movie);
-      if (!movies) throw new Error('Not found.');
+      if (movies.length === 0) throw new Error('Not found.');
       return movies;
     } catch (e) {
       console.log(e);
