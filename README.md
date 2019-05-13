@@ -15,3 +15,31 @@ scraper.getCinemaInfo('cineplex').then(data => console.log(data));
 scraper.getMovieInfo('cineplex', 'avengers').then(data => console.log(data));
 
 ```
+
+### Changes
+
+```javascript
+// starcinemas has a public api for two locations, umm al quwain and khalifa city
+const got = require('got');
+
+const url = 'http://starapi1.binarynumbers.io/GetAllCinemasSch';
+
+(async () => {
+  let ids = [3, 5]; // 5 = umm al quwain, 3 = khalifa city abu dhabi
+  try {
+    for (let i = 0; i < ids.length; i++) {
+      let id = ids[i];
+      const {body} = await got.post(url, {
+        body: JSON.stringify({
+          LanguageID: '1',
+          CountryID: '230',
+          CinemaID: id,
+        }),
+      });
+      console.log(body);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+})();
+```
