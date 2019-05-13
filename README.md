@@ -67,4 +67,21 @@ const url = 'http://starapi1.binarynumbers.io/GetCinemaSchedule'
     console.log(e);
   }
 })();
+
+// string search
+const query = 'avengers'
+const url = 'http://starapi1.binarynumbers.io/search?term=' + query
+
+(async () => {
+  try {
+      const {body} = await got(url);
+      console.log(body); // 
+      // sample out [{"label":"Avengers: Endgame","value":2}]
+      // value is MovieID
+  } catch (e) {
+    console.log(e);
+  }
+})();
+
+
 ```
